@@ -1,3 +1,10 @@
+; This is an implementation of torstan's
+; [Award Winner] Creating an old-school map in Gimp
+; located here:
+; https://www.cartographersguild.com/showthread.php?t=2461
+;
+; All credit to torstan - I just coded it up
+;
 (define (script-fu-osr-dungeon-template w h c)
 	(let*
 		(
@@ -9,6 +16,8 @@
 			(secrets-layer (car (gimp-layer-new i w h 1 "Secrets" 100 0)))
 			(labels-layer (car (gimp-layer-new i w h 1 "Labels" 100 0)))
 		)
+		; Push and use our own context to avoid user confusion
+		(gimp-context-push)
 		; Add all new layers
 		(gimp-image-insert-layer i background-layer 0 -1)
 		(gimp-image-insert-layer i walls-layer 0 -1)
@@ -28,6 +37,7 @@
 		(plug-in-grid 1 i background-layer 1 50 0 c 255 1 50 0 c 255 0 0 0 c 255)
 		; Display it!
 		(gimp-display-new i) ; reminder, only valid with a UI
+		(gimp-context-pop)
 		(gimp-display-flush) ; dunno if this is necessary
 		(gimp-image-clean-all i) ; mark image as clean
 	)
